@@ -65,13 +65,8 @@ def _eval_once(saver, summary_writer, top_1_op, top_5_op, summary_op):
   with tf.Session() as sess:
     ckpt = tf.train.get_checkpoint_state(FLAGS.checkpoint_dir)
     if ckpt and ckpt.model_checkpoint_path:
-      if os.path.isabs(ckpt.model_checkpoint_path):
-        # Restores from checkpoint with absolute path.
-        saver.restore(sess, ckpt.model_checkpoint_path)
-      else:
-        # Restores from checkpoint with relative path.
-        saver.restore(sess, os.path.join(FLAGS.checkpoint_dir,
-                                         ckpt.model_checkpoint_path))
+      # Restores from checkpoint with absolute path.
+      saver.restore(sess, ckpt.model_checkpoint_path)
 
       # Assuming model_checkpoint_path looks something like:
       #   /my-favorite-path/imagenet_train/model.ckpt-0,
